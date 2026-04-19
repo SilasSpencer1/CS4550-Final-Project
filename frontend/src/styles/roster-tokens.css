@@ -1,0 +1,209 @@
+/* =============================================================
+   Roster Design System — colors & type tokens
+   A warm, playful social calendar app.
+   Typography substitutes Inter for Suisse Int'l (user will swap).
+   Structural DNA adapted from CloudZero Design System (Sligo).
+   ============================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;1,500&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* ---- Color primitives ---------------------------------------- */
+
+  /* Ink / paper — warm, not pure black/white */
+  --ink-900: #1F1D1A;       /* primary text, fundamental black */
+  --ink-800: #2D2A26;
+  --ink-700: #4A453E;       /* body text */
+  --ink-600: #6A6459;       /* secondary text */
+  --ink-500: #8E8678;       /* muted / placeholder */
+  --ink-400: #B8B1A3;       /* disabled / faint */
+  --ink-300: #D9D2C2;       /* divider strong */
+  --ink-200: #E8E1D1;       /* divider / border subtle */
+  --ink-100: #F1ECDE;       /* surface tinted */
+  --ink-050: #FAF6EC;       /* paper (secondary bg) */
+  --paper:   #FFFDF7;       /* canvas (primary bg) — warm cream */
+  --white:   #FFFFFF;
+
+  /* Accent palette — bright, friendly, festival-poster energy */
+  --persimmon-700: #A61F00;
+  --persimmon-600: #C72600;
+  --persimmon-500: #E42B01;   /* primary action */
+  --persimmon-400: #FF5530;
+  --persimmon-200: #FFBBAB;   /* blush */
+  --persimmon-100: #FFE4DC;
+  --persimmon-050: #FFF2EE;
+
+  --citron-700:  #8C8900;
+  --citron-600:  #B5B01E;
+  --citron-500:  #E4DC4E;     /* highlight / sticker yellow */
+  --citron-300:  #F0EA8A;
+  --citron-100:  #F8F5C7;
+  --citron-050:  #FCFBE8;
+
+  --mint-700:    #0E5F66;
+  --mint-600:    #16838C;     /* links, info */
+  --mint-500:    #7AC2C8;     /* aqua */
+  --mint-300:    #B3DBDE;
+  --mint-100:    #DBEEEF;
+  --mint-050:    #EEF7F7;
+
+  --grape-700:   #4A3A87;
+  --grape-600:   #6952B0;
+  --grape-500:   #8069C7;     /* festival purple */
+  --grape-300:   #B4A6E0;
+  --grape-100:   #E4DDF4;
+
+  /* Status */
+  --success-600: #3B8332;
+  --success-500: #5AA44F;
+  --success-100: #DCEFD8;
+
+  --warning-600: #926E00;
+  --warning-500: #F3B700;
+  --warning-100: #FCEBB8;
+
+  --danger-600:  #C72600;
+  --danger-500:  #E42B01;
+  --danger-100:  #FFE4DC;
+
+  --info-600:    #16838C;
+  --info-500:    #7AC2C8;
+  --info-100:    #DBEEEF;
+
+  /* ---- Semantic roles ---------------------------------------- */
+  --bg-canvas:       var(--paper);
+  --bg-surface:      var(--white);
+  --bg-surface-alt:  var(--ink-050);
+  --bg-sunken:       var(--ink-100);
+  --bg-inverse:      var(--ink-900);
+
+  --fg-default:      var(--ink-900);
+  --fg-muted:        var(--ink-700);
+  --fg-subtle:       var(--ink-600);
+  --fg-faint:        var(--ink-500);
+  --fg-inverse:      var(--paper);
+  --fg-link:         var(--mint-600);
+  --fg-link-hover:   var(--mint-700);
+
+  --border-subtle:   var(--ink-200);
+  --border-default:  var(--ink-300);
+  --border-strong:   var(--ink-400);
+  --border-focus:    var(--persimmon-500);
+
+  --action-primary-bg:        var(--ink-900);
+  --action-primary-fg:        var(--paper);
+  --action-primary-hover:     var(--ink-800);
+  --action-primary-pressed:   #000000;
+
+  --action-accent-bg:         var(--persimmon-500);
+  --action-accent-fg:         var(--white);
+  --action-accent-hover:      var(--persimmon-600);
+  --action-accent-pressed:    var(--persimmon-700);
+
+  --action-secondary-bg:      var(--white);
+  --action-secondary-fg:      var(--ink-900);
+  --action-secondary-border:  var(--ink-900);
+  --action-secondary-hover:   var(--ink-100);
+
+  /* ---- Shadows (from CloudZero) ------------------------------ */
+  --shadow-subtle:  0 1px 2px rgba(31,29,26,0.04), 0 0 8px rgba(36,36,36,0.08);
+  --shadow-raised:  0 4px 12px rgba(31,29,26,0.08), 0 0 8px rgba(36,36,36,0.06);
+  --shadow-modal:   0 0 16px rgba(36,36,36,0.15), 0 12px 32px rgba(31,29,26,0.12);
+  --shadow-sticker: 2px 3px 0 rgba(31,29,26,1);              /* playful offset — hero CTAs, stickers */
+  --shadow-sticker-soft: 2px 3px 0 rgba(31,29,26,0.12);
+  --shadow-inset:   inset 0 1px 0 rgba(255,255,255,0.35), inset 0 -1px 0 rgba(31,29,26,0.04);
+  --ring-focus:     0 0 0 3px rgba(228,43,1,0.22);
+
+  /* ---- Radii ------------------------------------------------- */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+
+  /* ---- Spacing (4px base) ------------------------------------ */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-32: 128px;
+
+  /* ---- Type -------------------------------------------------- */
+  --font-sans: 'Inter', 'Suisse Int\'l', 'GT America', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-display: 'Fraunces', 'Suisse Int\'l', Georgia, serif; /* occasional editorial accent */
+  --font-mono: 'JetBrains Mono', 'Roboto Mono', ui-monospace, monospace;
+
+  /* Display scale — from CZ Headlines (D1..H6) */
+  --fs-d1: 80px;   --lh-d1: 80px;   --ls-d1: -0.025em;
+  --fs-d2: 64px;   --lh-d2: 64px;   --ls-d2: -0.022em;
+  --fs-d3: 48px;   --lh-d3: 52px;   --ls-d3: -0.020em;
+  --fs-h1: 40px;   --lh-h1: 44px;   --ls-h1: -0.018em;
+  --fs-h2: 32px;   --lh-h2: 36px;   --ls-h2: -0.012em;
+  --fs-h3: 24px;   --lh-h3: 28px;   --ls-h3: -0.008em;
+  --fs-h4: 20px;   --lh-h4: 24px;   --ls-h4: -0.006em;
+  --fs-h5: 16px;   --lh-h5: 18px;   --ls-h5: -0.002em;
+  --fs-h6: 14px;   --lh-h6: 16px;   --ls-h6:  0em;
+
+  --fs-body-lg: 16px;  --lh-body-lg: 24px;
+  --fs-body:    14px;  --lh-body:    20px;
+  --fs-body-sm: 12px;  --lh-body-sm: 18px;
+  --fs-body-xs: 11px;  --lh-body-xs: 15px;
+
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semi: 600;
+  --fw-bold: 700;
+}
+
+/* =============================================================
+   Base element styles
+   ============================================================= */
+html, body {
+  background: var(--bg-canvas);
+  color: var(--fg-default);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body-lg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'ss01', 'cv11';
+}
+
+h1, .h1 { font-family: var(--font-sans); font-size: var(--fs-h1); line-height: var(--lh-h1); letter-spacing: var(--ls-h1); font-weight: var(--fw-medium); color: var(--fg-default); margin: 0; }
+h2, .h2 { font-family: var(--font-sans); font-size: var(--fs-h2); line-height: var(--lh-h2); letter-spacing: var(--ls-h2); font-weight: var(--fw-medium); color: var(--fg-default); margin: 0; }
+h3, .h3 { font-family: var(--font-sans); font-size: var(--fs-h3); line-height: var(--lh-h3); letter-spacing: var(--ls-h3); font-weight: var(--fw-medium); color: var(--fg-default); margin: 0; }
+h4, .h4 { font-family: var(--font-sans); font-size: var(--fs-h4); line-height: var(--lh-h4); letter-spacing: var(--ls-h4); font-weight: var(--fw-medium); color: var(--fg-default); margin: 0; }
+h5, .h5 { font-family: var(--font-sans); font-size: var(--fs-h5); line-height: var(--lh-h5); letter-spacing: var(--ls-h5); font-weight: var(--fw-medium); color: var(--fg-default); margin: 0; }
+h6, .h6 { font-family: var(--font-sans); font-size: var(--fs-h6); line-height: var(--lh-h6); letter-spacing: var(--ls-h6); font-weight: var(--fw-medium); color: var(--fg-default); margin: 0; }
+
+.display-1 { font-family: var(--font-sans); font-size: var(--fs-d1); line-height: var(--lh-d1); letter-spacing: var(--ls-d1); font-weight: var(--fw-medium); }
+.display-2 { font-family: var(--font-sans); font-size: var(--fs-d2); line-height: var(--lh-d2); letter-spacing: var(--ls-d2); font-weight: var(--fw-medium); }
+.display-3 { font-family: var(--font-sans); font-size: var(--fs-d3); line-height: var(--lh-d3); letter-spacing: var(--ls-d3); font-weight: var(--fw-medium); }
+.display-editorial { font-family: var(--font-display); font-style: italic; font-weight: 500; letter-spacing: -0.015em; }
+
+p { margin: 0 0 var(--space-3); color: var(--fg-muted); font-size: var(--fs-body-lg); line-height: var(--lh-body-lg); }
+.p-lg { font-size: var(--fs-body-lg); line-height: var(--lh-body-lg); }
+.p-md { font-size: var(--fs-body); line-height: var(--lh-body); }
+.p-sm { font-size: var(--fs-body-sm); line-height: var(--lh-body-sm); }
+.p-xs { font-size: var(--fs-body-xs); line-height: var(--lh-body-xs); }
+
+.label { font-size: var(--fs-body); line-height: var(--lh-body); font-weight: var(--fw-medium); color: var(--fg-muted); }
+.eyebrow { font-size: var(--fs-body-xs); line-height: var(--lh-body-xs); font-weight: var(--fw-semi); color: var(--fg-subtle); text-transform: uppercase; letter-spacing: 0.08em; }
+
+a { color: var(--fg-link); text-decoration: none; }
+a:hover { color: var(--fg-link-hover); text-decoration: underline; text-underline-offset: 2px; }
+
+code, .code { font-family: var(--font-mono); font-size: 0.92em; background: var(--ink-100); padding: 1px 6px; border-radius: var(--radius-xs); color: var(--ink-800); }
+
+hr { border: none; border-top: 1px solid var(--border-subtle); margin: var(--space-8) 0; }
+
+::selection { background: var(--citron-500); color: var(--ink-900); }

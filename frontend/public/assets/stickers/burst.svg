@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <g>
+    <g transform="rotate(0 40 40)"><path d="M40 8 L43 37 L40 37 Z M40 8 L37 37 L40 37 Z" fill="#E42B01" stroke="#1F1D1A" stroke-width="2" stroke-linejoin="round"></path></g>
+    <g transform="rotate(45 40 40)"><path d="M40 8 L43 37 L40 37 Z M40 8 L37 37 L40 37 Z" fill="#E42B01" stroke="#1F1D1A" stroke-width="2" stroke-linejoin="round"></path></g>
+    <g transform="rotate(90 40 40)"><path d="M40 8 L43 37 L40 37 Z M40 8 L37 37 L40 37 Z" fill="#E42B01" stroke="#1F1D1A" stroke-width="2" stroke-linejoin="round"></path></g>
+    <g transform="rotate(135 40 40)"><path d="M40 8 L43 37 L40 37 Z M40 8 L37 37 L40 37 Z" fill="#E42B01" stroke="#1F1D1A" stroke-width="2" stroke-linejoin="round"></path></g>
+    <circle cx="40" cy="40" r="8" fill="#E4DC4E" stroke="#1F1D1A" stroke-width="2"></circle>
+  </g>
+</svg>
