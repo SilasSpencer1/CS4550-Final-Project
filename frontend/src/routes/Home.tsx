@@ -89,42 +89,56 @@ function AnonHome() {
         )}
       </section>
 
-      <section className="container mt-4" style={{ paddingTop: 32 }}>
-        <div className="section-head">
-          <h2 className="section-title">why roster</h2>
+      <section className="container manifesto">
+        <div className="manifesto-lead">
+          <span className="eyebrow">the principles</span>
+          <h2 className="manifesto-heading">
+            three things we <span className="editorial">actually</span> care about.
+          </h2>
         </div>
-        <div className="grid grid-3">
-          <div className="card feature">
-            <h4>
-              <Icon name="lock" size={18} color="var(--persimmon-500)" />
-              privacy by default
-            </h4>
-            <p>
-              each event is public, friends-only, or just a busy block. you
-              choose per event.
-            </p>
-          </div>
-          <div className="card feature">
-            <h4>
-              <Icon name="users" size={18} color="var(--mint-600)" />
-              friends, not followers
-            </h4>
-            <p>
-              see the plans your people are making. tap to ask if you can tag
-              along.
-            </p>
-          </div>
-          <div className="card feature">
-            <h4>
-              <Icon name="sparkle" size={18} color="var(--grape-500)" />
-              smart suggestions
-            </h4>
-            <p>
-              we match local events to your interests and the gaps in your
-              week.
-            </p>
-          </div>
-        </div>
+        <ol className="manifesto-list">
+          <li>
+            <span className="manifesto-num" data-accent="persimmon">01</span>
+            <div className="manifesto-body">
+              <h3 className="manifesto-title">
+                <span className="editorial">privacy,</span> by default.
+              </h3>
+              <p>
+                every event is either public, friends-only, or just a busy
+                block. you decide per event — no one-setting-rules-them-all
+                nonsense. if a stranger looks at your calendar they see when
+                you're busy, not what you're doing.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span className="manifesto-num" data-accent="mint">02</span>
+            <div className="manifesto-body">
+              <h3 className="manifesto-title">
+                <span className="editorial">friends,</span> not followers.
+              </h3>
+              <p>
+                no likes, no metrics, no algorithm sorting your people. you see
+                what your actual friends are up to this week — and if you want
+                to tag along, you ask. that's it.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span className="manifesto-num" data-accent="grape">03</span>
+            <div className="manifesto-body">
+              <h3 className="manifesto-title">
+                suggestions that know your{" "}
+                <span className="editorial">week.</span>
+              </h3>
+              <p>
+                we match local concerts, runs, and shows to your interests —
+                and we only surface ones that fit in the holes in your
+                calendar. no conflict, no noise.
+              </p>
+            </div>
+          </li>
+        </ol>
       </section>
     </>
   );
