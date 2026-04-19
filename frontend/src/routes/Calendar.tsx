@@ -55,10 +55,16 @@ export default function Calendar() {
             <span className="editorial">the whole picture.</span>
           </h1>
         </div>
-        <Button variant="primary" to="/events/new">
-          <Icon name="plus" size={16} />
-          new event
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="secondary" to="/gcal-import">
+            <Icon name="calendar" size={16} />
+            google calendar
+          </Button>
+          <Button variant="primary" to="/events/new">
+            <Icon name="plus" size={16} />
+            new event
+          </Button>
+        </div>
       </div>
       <div className="calendar-wrap">
         <BigCalendar
