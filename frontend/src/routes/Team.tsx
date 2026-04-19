@@ -3,10 +3,10 @@ import Icon from "../ui/Icon";
 
 const FRONTEND_REPO =
   import.meta.env.VITE_FRONTEND_REPO ??
-  "https://github.com/SilasSpencer1/roster-social-calendar";
+  "https://github.com/SilasSpencer1/CS4550-Final-Project";
 const BACKEND_REPO =
   import.meta.env.VITE_BACKEND_REPO ??
-  "https://github.com/SilasSpencer1/roster-social-calendar";
+  "https://github.com/SilasSpencer1/CS4550-Final-Project";
 
 interface Member {
   name: string;
