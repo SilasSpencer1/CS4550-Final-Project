@@ -113,16 +113,18 @@ export default function Discover() {
           {(city || keyword) && <p>try a different city or keyword.</p>}
         </div>
       ) : (
-        <div className="grid grid-3">
-          {results.map((r) => (
+        <div className="poster-grid poster-grid-featured">
+          {results.map((r, i) => (
             <PosterTile
               key={r.id}
               to={`/discover/${r.id}`}
               title={r.name}
               image={r.image}
               startTime={r.startDateTime}
-              city={r.city || r.venue}
+              city={r.city}
+              venue={r.venue}
               tags={r.classifications}
+              featured={i === 0}
             />
           ))}
         </div>

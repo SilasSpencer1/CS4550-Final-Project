@@ -466,31 +466,246 @@ img { max-width: 100%; display: block; }
 .event-row-title { font-size: 15px; font-weight: 600; color: var(--ink-900); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .event-row-meta { font-size: 12px; color: var(--ink-600); margin-top: 3px; font-family: var(--font-mono); }
 
-/* ============ tiles/cards grid items ============ */
+/* ============ poster tiles ============
+ * "flyer on a corkboard" aesthetic. chunky date stamp, bold title,
+ * fraunces italic on venue ("at mel's" reads handwritten), slight
+ * rotation at rest so they don't feel template-grid, featured variant
+ * gets the sticker treatment (citron bg + 2px ink + hard shadow).
+ */
 
-.poster-tile {
-  background: var(--bg-surface);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-subtle);
-  overflow: hidden;
-  box-shadow: var(--shadow-subtle);
-  text-decoration: none;
-  color: inherit;
+.poster-grid {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.poster-grid-featured > :first-child {
+  grid-column: span 2;
+}
+@media (max-width: 640px) {
+  .poster-grid-featured > :first-child { grid-column: span 1; }
+}
+
+.ptile {
   display: flex;
   flex-direction: column;
-  transition: transform 120ms ease, box-shadow 120ms ease;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 1px 3px rgba(31, 29, 26, 0.06);
+  transform: rotate(-0.3deg);
+  transition:
+    transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 180ms ease,
+    border-color 180ms ease;
 }
-.poster-tile:hover { transform: translateY(-2px); box-shadow: var(--shadow-raised); text-decoration: none; }
-.poster-tile-img {
+.ptile:nth-child(even) { transform: rotate(0.3deg); }
+.ptile:hover,
+.ptile:focus-visible {
+  transform: rotate(0deg) translateY(-3px);
+  box-shadow: var(--shadow-raised);
+  text-decoration: none;
+  border-color: var(--ink-300);
+}
+
+/* the "art" block — either a real image or a solid color block with date */
+.ptile-art {
+  position: relative;
+  aspect-ratio: 5 / 3;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 14px;
+  overflow: hidden;
+  isolation: isolate;
+}
+.ptile-image .ptile-art {
+  aspect-ratio: 4 / 3;
+}
+.ptile-image-bg {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: 160px;
-  background: var(--ink-100);
+  height: 100%;
   object-fit: cover;
+  z-index: 0;
 }
-.poster-tile-body { padding: var(--space-4); flex: 1; display: flex; flex-direction: column; gap: 6px; }
-.poster-tile-title { font-size: 15px; font-weight: 600; color: var(--ink-900); line-height: 1.3; }
-.poster-tile-meta { font-size: 12px; color: var(--ink-600); font-family: var(--font-mono); }
-.poster-tile-tags { margin-top: var(--space-1); display: flex; gap: 4px; flex-wrap: wrap; }
+/* subtle grain overlay on image variant so TM photos don't look so slick */
+.ptile-image .ptile-art::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(rgba(31, 29, 26, 0.08) 1px, transparent 1px);
+  background-size: 3px 3px;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+}
+/* solid strip under text on image variant so it stays readable */
+.ptile-image .ptile-art::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 92px;
+  z-index: 1;
+  background: linear-gradient(180deg, transparent, rgba(31, 29, 26, 0.62));
+}
+.ptile-image .ptile-datestamp,
+.ptile-image .ptile-time {
+  position: relative;
+  z-index: 2;
+}
+/* text-block variant: faux-poster printed dots for texture */
+.ptile-block .ptile-art {
+  background-image:
+    radial-gradient(rgba(31, 29, 26, 0.09) 1.4px, transparent 1.4px),
+    radial-gradient(rgba(255, 255, 255, 0.14) 1.4px, transparent 1.4px);
+  background-position: 0 0, 4px 4px;
+  background-size: 8px 8px, 8px 8px;
+  background-blend-mode: normal;
+}
+.ptile-block .ptile-art > * {
+  background-color: inherit;
+}
+
+/* chunky date stamp — reads like a rubber stamp on a flyer */
+.ptile-datestamp {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  line-height: 1;
+  padding: 8px 10px;
+  background: var(--paper);
+  color: var(--ink-900);
+  border: 2px solid var(--ink-900);
+  box-shadow: 2px 2px 0 var(--ink-900);
+  border-radius: 2px;
+}
+.ptile-datestamp .dow {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  margin-bottom: 2px;
+}
+.ptile-datestamp .dom {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 0.9;
+}
+.ptile-datestamp .mon {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  margin-top: 2px;
+}
+
+.ptile-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 8px;
+  background: var(--paper);
+  border: 1px solid var(--ink-900);
+  border-radius: var(--radius-pill);
+  color: var(--ink-900);
+}
+.ptile-image .ptile-time {
+  background: var(--paper);
+}
+
+.ptile-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.ptile-title {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--ink-900);
+  margin: 0;
+  /* line clamp: keep titles to two lines max so cards stay tidy */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ptile-venue {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--ink-700);
+  font-size: 14px;
+}
+.ptile-venue .editorial {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--ink-900);
+}
+
+.ptile-tags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+.ptile-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  background: var(--ink-050);
+  color: var(--ink-700);
+  border-radius: var(--radius-pill);
+}
+
+/* ---- featured (sticker) variant ---------------------------------- */
+.ptile-featured {
+  background: var(--citron-500);
+  border: 2px solid var(--ink-900);
+  box-shadow: var(--shadow-sticker);
+  transform: rotate(-0.9deg);
+}
+.ptile-featured:hover,
+.ptile-featured:focus-visible {
+  transform: rotate(0deg) translateY(-4px);
+  box-shadow: 4px 6px 0 var(--ink-900);
+}
+.ptile-featured .ptile-art {
+  border-bottom: 2px solid var(--ink-900);
+}
+.ptile-featured.ptile-block .ptile-art {
+  /* stronger dot texture on featured block variant */
+  background-image:
+    radial-gradient(rgba(31, 29, 26, 0.12) 1.6px, transparent 1.6px);
+  background-size: 9px 9px;
+}
+.ptile-featured .ptile-datestamp {
+  background: var(--paper);
+  box-shadow: 2px 2px 0 var(--ink-900);
+}
+.ptile-featured .ptile-tag {
+  background: var(--paper);
+  color: var(--ink-900);
+  border: 1px solid var(--ink-900);
+}
 
 /* ============ tabs ============ */
 

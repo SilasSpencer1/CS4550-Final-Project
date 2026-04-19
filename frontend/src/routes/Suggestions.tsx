@@ -36,8 +36,8 @@ export default function Suggestions() {
           </p>
         </div>
       ) : (
-        <div className="grid grid-3">
-          {list.map((s) => (
+        <div className="poster-grid poster-grid-featured">
+          {list.map((s, i) => (
             <PosterTile
               key={`${s.source}-${s.id}`}
               to={
@@ -50,6 +50,7 @@ export default function Suggestions() {
               startTime={s.startTime}
               city={s.city}
               tags={s.tags}
+              featured={i === 0}
             />
           ))}
         </div>

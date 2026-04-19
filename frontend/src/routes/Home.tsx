@@ -72,15 +72,17 @@ function AnonHome() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-3">
-            {featured.slice(0, 6).map((e) => (
+          <div className="poster-grid poster-grid-featured">
+            {featured.slice(0, 6).map((e, i) => (
               <PosterTile
                 key={e._id}
                 to={`/events/${e._id}`}
                 title={e.title}
                 startTime={e.startTime}
                 city={e.location?.city}
+                venue={e.location?.address}
                 tags={e.tags}
+                featured={i === 0}
               />
             ))}
           </div>
@@ -236,7 +238,7 @@ function LoggedInHome() {
               see all
             </Link>
           </div>
-          <div className="grid grid-3">
+          <div className="poster-grid">
             {suggestions.slice(0, 3).map((s) => (
               <PosterTile
                 key={`${s.source}-${s.id}`}
