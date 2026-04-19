@@ -4,6 +4,9 @@ import { createEvent } from "../api/events";
 import { useAppSelector } from "../hooks";
 import Button from "../ui/Button";
 import Field from "../ui/Field";
+import LocationAutocomplete, {
+  type LocationValue,
+} from "../ui/LocationAutocomplete";
 
 function toLocalInputValue(d: Date) {
   const pad = (n: number) => String(n).padStart(2, "0");
@@ -21,8 +24,13 @@ export default function EventCreate() {
   const [description, setDescription] = useState("");
   const [start, setStart] = useState(toLocalInputValue(now));
   const [end, setEnd] = useState(toLocalInputValue(later));
-  const [city, setCity] = useState(user.location?.city ?? "");
-  const [address, setAddress] = useState("");
+  const [location, setLocation] = useState<LocationValue>({
+    address: "",
+    city: user.location?.city ?? "",
+    state: user.location?.state,
+    lat: null,
+    lng: null,
+  });
   const [tags, setTags] = useState("");
   const [visibility, setVisibility] = useState<"busy" | "friends" | "public">(
     isOrganizer ? "public" : user.defaultPrivacy
@@ -39,7 +47,12 @@ export default function EventCreate() {
         description,
         startTime: new Date(start).toISOString(),
         endTime: new Date(end).toISOString(),
-        location: { address, city, lat: null, lng: null },
+        location: {
+          address: location.address,
+          city: location.city,
+          lat: location.lat,
+          lng: location.lng,
+        },
         tags: tags
           .split(",")
           .map((s) => s.trim())
@@ -99,22 +112,12 @@ export default function EventCreate() {
             />
           </Field>
         </div>
-        <div className="grid grid-2" style={{ gap: 16 }}>
-          <Field label="city">
-            <input
-              className="input"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-            />
-          </Field>
-          <Field label="address">
-            <input
-              className="input"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
-          </Field>
-        </div>
+        <LocationAutocomplete
+          value={location}
+          onChange={setLocation}
+          label="location"
+          hint="pick from the dropdown to verify the address and map it"
+        />
         <Field label="tags" hint="comma separated — helps people find it">
           <input
             className="input"

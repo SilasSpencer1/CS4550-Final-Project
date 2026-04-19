@@ -5,13 +5,25 @@ import { useAppDispatch, useAppSelector } from "../hooks";
 import { setUser } from "../store/session";
 import Button from "../ui/Button";
 import Field from "../ui/Field";
+import LocationAutocomplete, {
+  type LocationValue,
+} from "../ui/LocationAutocomplete";
 
 export default function ProfileEdit() {
   const user = useAppSelector((s) => s.session.user)!;
   const [displayName, setDisplayName] = useState(user.displayName ?? "");
   const [bio, setBio] = useState(user.bio ?? "");
-  const [city, setCity] = useState(user.location?.city ?? "");
-  const [state, setState] = useState(user.location?.state ?? "");
+  const [location, setLocation] = useState<LocationValue>({
+    address: "",
+    city: user.location?.city ?? "",
+    state: user.location?.state,
+    lat: null,
+    lng: null,
+    displayName:
+      user.location?.city && user.location?.state
+        ? `${user.location.city}, ${user.location.state}`
+        : user.location?.city ?? undefined,
+  });
   const [interests, setInterests] = useState((user.interests ?? []).join(", "));
   const [avatarUrl, setAvatarUrl] = useState(user.avatarUrl ?? "");
   const [defaultPrivacy, setDefaultPrivacy] = useState(user.defaultPrivacy);
@@ -32,7 +44,7 @@ export default function ProfileEdit() {
           .split(",")
           .map((s) => s.trim())
           .filter(Boolean),
-        location: { city, state },
+        location: { city: location.city, state: location.state ?? "" },
       });
       dispatch(setUser(updated));
       navigate(`/profile/${user.username}`);
@@ -74,23 +86,19 @@ export default function ProfileEdit() {
             onChange={(e) => setBio(e.target.value)}
           />
         </Field>
-        <div className="grid grid-2" style={{ gap: 16 }}>
-          <Field label="city">
-            <input
-              className="input"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-            />
-          </Field>
-          <Field label="state">
-            <input
-              className="input"
-              value={state}
-              onChange={(e) => setState(e.target.value)}
-              maxLength={2}
-            />
-          </Field>
-        </div>
+        <LocationAutocomplete
+          value={location}
+          onChange={setLocation}
+          label="where are you based?"
+          placeholder="search a city"
+          hint="pick from the dropdown so we can match you to local events"
+        />
+        {location.city && (
+          <div className="mono subtle" style={{ fontSize: 12, marginTop: -8 }}>
+            city: {location.city}
+            {location.state ? `, ${location.state}` : ""}
+          </div>
+        )}
         <Field
           label="interests"
           hint="comma separated — we match these to local events"

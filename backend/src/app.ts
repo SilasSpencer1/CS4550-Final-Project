@@ -10,6 +10,7 @@ import commentsRouter from "./routes/comments.js";
 import discoverRouter from "./routes/discover.js";
 import suggestionsRouter from "./routes/suggestions.js";
 import gcalRouter from "./routes/gcalImport.js";
+import geocodeRouter from "./routes/geocode.js";
 
 export function createApp() {
   const app = express();
@@ -49,6 +50,7 @@ export function createApp() {
   app.use("/api/discover", discoverRouter);
   app.use("/api/suggestions", suggestionsRouter);
   app.use("/api/gcal", gcalRouter);
+  app.use("/api/geocode", geocodeRouter);
 
   app.use(
     (

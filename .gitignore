@@ -16,3 +16,9 @@ dist
 # Temp
 *.tmp
 coverage/
+
+# Local Netlify folder
+.netlify
+
+# TypeScript build info
+*.tsbuildinfo
