@@ -1,8 +1,10 @@
 import { api } from "./client";
 import type { Rsvp } from "./types";
 
-export async function myRsvps() {
-  const { data } = await api.get<Rsvp[]>("/rsvps/mine");
+export async function myRsvps(status?: Rsvp["status"]) {
+  const { data } = await api.get<Rsvp[]>("/rsvps/mine", {
+    params: status ? { status } : undefined,
+  });
   return data;
 }
 
@@ -18,6 +20,11 @@ export async function rsvpToEvent(eventId: string, status: Rsvp["status"] = "goi
 
 export async function approveRsvp(eventId: string, userId: string) {
   const { data } = await api.post<Rsvp>(`/rsvps/event/${eventId}/approve/${userId}`);
+  return data;
+}
+
+export async function inviteFriend(eventId: string, userId: string) {
+  const { data } = await api.post<Rsvp>(`/rsvps/event/${eventId}/invite/${userId}`);
   return data;
 }
 

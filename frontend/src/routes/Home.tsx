@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../hooks";
 import { publicEvents, friendsFeed, myEvents } from "../api/events";
+import { myRsvps, rsvpToEvent, cancelRsvp } from "../api/rsvps";
 import { getSuggestions } from "../api/suggestions";
-import type { UserEvent, Suggestion } from "../api/types";
+import type { UserEvent, Rsvp, Suggestion } from "../api/types";
 import EventRow from "../ui/EventRow";
 import PosterTile from "../ui/PosterTile";
 import Button from "../ui/Button";
@@ -149,6 +150,21 @@ function LoggedInHome() {
   const [upcoming, setUpcoming] = useState<UserEvent[]>([]);
   const [feed, setFeed] = useState<UserEvent[]>([]);
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+  const [invites, setInvites] = useState<Rsvp[]>([]);
+
+  async function loadInvites() {
+    try {
+      const list = await myRsvps("invited");
+      // Only keep live events, populated
+      const live = list.filter((r) => {
+        const ev = typeof r.event === "string" ? null : r.event;
+        return ev && new Date(ev.endTime).getTime() >= Date.now();
+      });
+      setInvites(live);
+    } catch {
+      setInvites([]);
+    }
+  }
 
   useEffect(() => {
     myEvents().then((list) => {
@@ -161,7 +177,17 @@ function LoggedInHome() {
     getSuggestions()
       .then((list) => setSuggestions(list.slice(0, 5)))
       .catch(() => setSuggestions([]));
+    loadInvites();
   }, []);
+
+  async function respond(eventId: string, action: "going" | "maybe" | "pass") {
+    if (action === "pass") {
+      await cancelRsvp(eventId);
+    } else {
+      await rsvpToEvent(eventId, action);
+    }
+    loadInvites();
+  }
 
   return (
     <div className="container page">
@@ -191,6 +217,88 @@ function LoggedInHome() {
           )}
         </p>
       </section>
+
+      {invites.length > 0 && (
+        <section className="mb-6">
+          <div className="section-head">
+            <h2 className="section-title">waiting on you</h2>
+            <span className="mono subtle">
+              {invites.length} invite{invites.length === 1 ? "" : "s"}
+            </span>
+          </div>
+          <div className="stack-sm">
+            {invites.map((r) => {
+              const ev = typeof r.event === "string" ? null : r.event;
+              if (!ev) return null;
+              const creator =
+                ev.createdBy && typeof ev.createdBy !== "string"
+                  ? ev.createdBy
+                  : null;
+              return (
+                <div key={r._id} className="card-sticker">
+                  <div
+                    className="flex-between"
+                    style={{ alignItems: "flex-start", gap: 12 }}
+                  >
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div className="mono" style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--ink-700)" }}>
+                        {formatDate(ev.startTime)}
+                      </div>
+                      <Link
+                        to={`/events/${ev._id}`}
+                        style={{
+                          display: "block",
+                          fontSize: 17,
+                          fontWeight: 600,
+                          color: "var(--ink-900)",
+                          margin: "3px 0",
+                          textDecoration: "none",
+                        }}
+                      >
+                        {ev.title}
+                      </Link>
+                      {creator && (
+                        <div className="muted" style={{ fontSize: 13 }}>
+                          <Link to={`/profile/${creator.username}`}>
+                            {creator.displayName || creator.username}
+                          </Link>{" "}
+                          invited you
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex gap-2" style={{ marginTop: 12 }}>
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      onClick={() => respond(ev._id, "going")}
+                      style={{ flex: 1 }}
+                    >
+                      i'm in
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => respond(ev._id, "maybe")}
+                      style={{ flex: 1 }}
+                    >
+                      maybe
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => respond(ev._id, "pass")}
+                      style={{ flex: 1 }}
+                    >
+                      can't
+                    </Button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       <section className="grid-sidebar mb-6">
         <div>

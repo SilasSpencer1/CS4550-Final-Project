@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { Event } from "../models/Event.js";
+import { Rsvp } from "../models/Rsvp.js";
 import { requireAuth } from "../middleware/requireAuth.js";
 import { areFriends, friendIdsOf } from "../lib/friends.js";
 
@@ -67,8 +68,18 @@ router.get("/:id", async (req, res) => {
   const creatorId = (event.createdBy as any)._id.toString();
   const isSelf = viewerId === creatorId;
   const friend = viewerId ? await areFriends(viewerId, creatorId) : false;
+  // Being invited (or already going/maybe) grants viewing rights — otherwise a
+  // friends-only event would be a dead-end for non-friend invitees.
+  const hasRsvp = viewerId
+    ? !!(await Rsvp.exists({ user: viewerId, event: event._id }))
+    : false;
 
-  if (event.visibility === "public" || isSelf || (event.visibility === "friends" && friend)) {
+  if (
+    event.visibility === "public" ||
+    isSelf ||
+    (event.visibility === "friends" && friend) ||
+    hasRsvp
+  ) {
     return res.json(event);
   }
   res.json({

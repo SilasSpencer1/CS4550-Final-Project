@@ -5,6 +5,7 @@ import { eventRsvps, rsvpToEvent, cancelRsvp, approveRsvp } from "../api/rsvps";
 import type { PublicUser, Rsvp, UserEvent } from "../api/types";
 import PrivacyBadge from "../components/PrivacyBadge";
 import CommentList from "../components/CommentList";
+import InvitePanel from "../components/InvitePanel";
 import { useAppSelector } from "../hooks";
 import { formatDateRange } from "../lib/format";
 import Avatar from "../ui/Avatar";
@@ -76,6 +77,12 @@ export default function EventDetail() {
   const going = rsvps.filter((r) => r.status === "going");
   const maybe = rsvps.filter((r) => r.status === "maybe");
   const requested = rsvps.filter((r) => r.status === "requested");
+  const invited = rsvps.filter((r) => r.status === "invited");
+
+  function refreshRsvps() {
+    if (!id) return;
+    eventRsvps(id).then(setRsvps);
+  }
 
   return (
     <div className="container page">
@@ -211,9 +218,21 @@ export default function EventDetail() {
               <p className="muted">no one yet.</p>
             ) : (
               <div className="stack-sm">
-                {[...going, ...maybe, ...requested].map((r) => {
+                {[...going, ...maybe, ...requested, ...invited].map((r) => {
                   const u = typeof r.user === "string" ? null : r.user;
                   if (!u) return null;
+                  const chipKind: "going" | "maybe" | "out" =
+                    r.status === "going"
+                      ? "going"
+                      : r.status === "maybe" || r.status === "requested"
+                      ? "maybe"
+                      : "out";
+                  const label =
+                    r.status === "requested"
+                      ? "wants in"
+                      : r.status === "invited"
+                      ? "invited"
+                      : r.status;
                   return (
                     <div
                       key={r._id}
@@ -237,19 +256,7 @@ export default function EventDetail() {
                           {u.displayName || u.username}
                         </Link>
                       </div>
-                      <Chip
-                        kind={
-                          r.status === "going"
-                            ? "going"
-                            : r.status === "maybe"
-                            ? "maybe"
-                            : r.status === "requested"
-                            ? "maybe"
-                            : "out"
-                        }
-                      >
-                        {r.status === "requested" ? "wants in" : r.status}
-                      </Chip>
+                      <Chip kind={chipKind}>{label}</Chip>
                       {isCreator && r.status === "requested" && (
                         <Button
                           size="sm"
@@ -265,6 +272,15 @@ export default function EventDetail() {
               </div>
             )}
           </div>
+          {isCreator && (
+            <div style={{ marginTop: "var(--space-4)" }}>
+              <InvitePanel
+                eventId={event._id}
+                rsvps={rsvps}
+                onInvited={refreshRsvps}
+              />
+            </div>
+          )}
         </aside>
       </div>
     </div>
