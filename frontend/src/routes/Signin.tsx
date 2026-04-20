@@ -26,7 +26,7 @@ export default function Signin() {
       navigate(from);
     } catch (err: any) {
       setError(
-        err?.response?.data?.error ?? "couldn't sign you in — try that again?"
+        err?.response?.data?.error ?? "couldn't sign you in. try that again?"
       );
     } finally {
       setLoading(false);

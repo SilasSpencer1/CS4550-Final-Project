@@ -75,7 +75,7 @@ export default function EventCreate() {
       </h1>
 
       <form onSubmit={handleSubmit} className="stack">
-        <Field label="title" hint="be specific — 'dinner at mel's' beats 'dinner'">
+        <Field label="title" hint="be specific. 'dinner at mel's' beats 'dinner'.">
           <input
             className="input"
             value={title}
@@ -84,7 +84,7 @@ export default function EventCreate() {
             placeholder="thursday pizza at mel's"
           />
         </Field>
-        <Field label="description" hint="the details — dress code, what to bring, the vibe">
+        <Field label="description" hint="dress code, what to bring, the vibe.">
           <textarea
             className="textarea"
             rows={3}
@@ -118,7 +118,7 @@ export default function EventCreate() {
           label="location"
           hint="pick from the dropdown to verify the address and map it"
         />
-        <Field label="tags" hint="comma separated — helps people find it">
+        <Field label="tags" hint="comma separated. helps people find it.">
           <input
             className="input"
             value={tags}
@@ -133,9 +133,9 @@ export default function EventCreate() {
               value={visibility}
               onChange={(e) => setVisibility(e.target.value as any)}
             >
-              <option value="public">public — anyone can see it</option>
-              <option value="friends">friends — just your people</option>
-              <option value="busy">busy — just a time slot, no details</option>
+              <option value="public">public (anyone can see it)</option>
+              <option value="friends">friends only</option>
+              <option value="busy">busy block (no details)</option>
             </select>
           </Field>
         ) : (

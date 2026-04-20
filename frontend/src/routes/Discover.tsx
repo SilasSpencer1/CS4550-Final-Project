@@ -87,7 +87,7 @@ export default function Discover() {
             <input
               className="input"
               name="keyword"
-              placeholder="keyword — e.g. jazz"
+              placeholder="keyword, e.g. jazz"
               defaultValue={keyword}
             />
           </div>

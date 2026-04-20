@@ -31,7 +31,7 @@ export default function GoogleImport() {
       setImported(r.imported);
       setStatus(`pulled in ${r.imported} event${r.imported === 1 ? "" : "s"}.`);
     } catch (err: any) {
-      setStatus(err?.response?.data?.error ?? "couldn't sync — try again?");
+      setStatus(err?.response?.data?.error ?? "couldn't sync. try again?");
     } finally {
       setBusy(false);
     }

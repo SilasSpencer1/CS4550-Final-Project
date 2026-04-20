@@ -78,7 +78,7 @@ export default function ProfileEdit() {
             />
           </Field>
         </div>
-        <Field label="bio" hint="a line or two — keep it light">
+        <Field label="bio" hint="a line or two, keep it light.">
           <textarea
             className="textarea"
             rows={3}
@@ -101,7 +101,7 @@ export default function ProfileEdit() {
         )}
         <Field
           label="interests"
-          hint="comma separated — we match these to local events"
+          hint="comma separated. we match these to local events."
         >
           <input
             className="input"
@@ -119,9 +119,9 @@ export default function ProfileEdit() {
             value={defaultPrivacy}
             onChange={(e) => setDefaultPrivacy(e.target.value as any)}
           >
-            <option value="public">public — anyone can see</option>
+            <option value="public">public (anyone can see)</option>
             <option value="friends">friends only</option>
-            <option value="busy">busy block — just show a time slot</option>
+            <option value="busy">busy block (no details)</option>
           </select>
         </Field>
         <div className="flex gap-2">

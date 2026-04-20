@@ -41,7 +41,7 @@ function AnonHome() {
             your <span className="editorial">weekend</span>.
           </h1>
           <p>
-            post what you're up to. see what friends are up to. ask to join — or
+            post what you're up to. see what friends are up to. ask to join, or
             don't. built for the small group chat, not the feed.
           </p>
           <div className="hero-actions">
@@ -65,7 +65,7 @@ function AnonHome() {
           <p className="muted">loading…</p>
         ) : featured.length === 0 ? (
           <div className="empty">
-            <span className="editorial">no plans yet — that's a plan in itself.</span>
+            <span className="editorial">no plans yet. that's kind of a plan.</span>
             <p>
               be the first. <Link to="/signup">start an account</Link> and post
               something.
@@ -105,7 +105,7 @@ function AnonHome() {
               </h3>
               <p>
                 every event is either public, friends-only, or just a busy
-                block. you decide per event — no one-setting-rules-them-all
+                block. you decide per event. no one-setting-rules-them-all
                 nonsense. if a stranger looks at your calendar they see when
                 you're busy, not what you're doing.
               </p>
@@ -119,8 +119,8 @@ function AnonHome() {
               </h3>
               <p>
                 no likes, no metrics, no algorithm sorting your people. you see
-                what your actual friends are up to this week — and if you want
-                to tag along, you ask. that's it.
+                what your actual friends are up to this week. if you want to
+                tag along, you ask. that's it.
               </p>
             </div>
           </li>
@@ -132,7 +132,7 @@ function AnonHome() {
                 <span className="editorial">week.</span>
               </h3>
               <p>
-                we match local concerts, runs, and shows to your interests —
+                we match local concerts, runs, and shows to your interests,
                 and we only surface ones that fit in the holes in your
                 calendar. no conflict, no noise.
               </p>
@@ -187,7 +187,7 @@ function LoggedInHome() {
               .
             </>
           ) : (
-            <>pretty empty week — maybe start something?</>
+            <>pretty empty week. maybe start something?</>
           )}
         </p>
       </section>
@@ -203,7 +203,7 @@ function LoggedInHome() {
           </div>
           {upcoming.length === 0 ? (
             <div className="empty">
-              <span className="editorial">no plans yet — that's a plan in itself.</span>
+              <span className="editorial">no plans yet. that's kind of a plan.</span>
               <p>
                 <Link to="/events/new">add something</Link> to your calendar.
               </p>

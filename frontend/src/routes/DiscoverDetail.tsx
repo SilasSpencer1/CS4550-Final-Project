@@ -115,7 +115,7 @@ export default function DiscoverDetail() {
           {event.info && <p className="mb-3">{event.info}</p>}
           {event.pleaseNote && (
             <p className="muted" style={{ fontSize: 14 }}>
-              <b>note —</b> {event.pleaseNote}
+              <b>note:</b> {event.pleaseNote}
             </p>
           )}
           {event.priceRanges?.length > 0 && (

@@ -26,7 +26,7 @@ export default function Signup() {
       dispatch(setUser(user));
       navigate("/");
     } catch (err: any) {
-      setError(err?.response?.data?.error ?? "couldn't create that account — try again?");
+      setError(err?.response?.data?.error ?? "couldn't create that account. try again?");
     } finally {
       setLoading(false);
     }
@@ -90,8 +90,8 @@ export default function Signup() {
             value={role}
             onChange={(e) => setRole(e.target.value as "user" | "organizer")}
           >
-            <option value="user">person — personal calendar & friends</option>
-            <option value="organizer">organizer — host public events</option>
+            <option value="user">person (personal calendar + friends)</option>
+            <option value="organizer">organizer (hosts public events)</option>
           </select>
         </Field>
         <Button

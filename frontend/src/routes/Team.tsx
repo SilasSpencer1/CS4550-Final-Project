@@ -14,7 +14,7 @@ interface Member {
 }
 
 const TEAM: Member[] = [
-  { name: "Silas Spencer", section: "CS4550 — Web Development, Spring 2026" },
+  { name: "Silas Spencer", section: "CS4550 · Web Development, Spring 2026" },
 ];
 
 export default function Team() {
@@ -102,7 +102,7 @@ export default function Team() {
               </tr>
               <tr>
                 <td style={{ fontWeight: 600 }}>design</td>
-                <td>roster design system — inter, fraunces italic, jetbrains mono</td>
+                <td>roster design system · inter, fraunces italic, jetbrains mono</td>
               </tr>
             </tbody>
           </table>
