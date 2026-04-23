@@ -351,10 +351,10 @@ img { max-width: 100%; display: block; }
 
 .display-editorial,
 .editorial {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 500;
-  letter-spacing: -0.015em;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: inherit;
+  letter-spacing: inherit;
 }
 
 .eyebrow {
@@ -652,8 +652,6 @@ img { max-width: 100%; display: block; }
   font-size: 14px;
 }
 .ptile-venue .editorial {
-  font-family: var(--font-display);
-  font-style: italic;
   font-weight: 500;
   color: var(--ink-900);
 }
@@ -821,8 +819,6 @@ img { max-width: 100%; display: block; }
   margin: 4px 0 var(--space-3);
 }
 .manifesto-title .editorial {
-  font-family: var(--font-display);
-  font-style: italic;
   font-weight: 500;
 }
 

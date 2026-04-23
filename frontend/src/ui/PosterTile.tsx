@@ -96,7 +96,7 @@ export default function PosterTile({
         {place && (
           <div className="ptile-venue">
             <Icon name="mapPin" size={13} />
-            <em className="editorial">{place}</em>
+            <span className="editorial">{place}</span>
           </div>
         )}
         {tags && tags.length > 0 && (
