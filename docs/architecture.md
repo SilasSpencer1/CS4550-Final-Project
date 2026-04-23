@@ -130,7 +130,7 @@ sequenceDiagram
     participant DB as Atlas
 
     User->>Browser: enter credentials
-    Browser->>API: POST /api/auth/signin<br/>{usernameOrEmail, password}
+    Browser->>API: POST /api/auth/signin {usernameOrEmail, password}
     API->>DB: findOne by username or email
     DB-->>API: user doc (with passwordHash)
     API->>API: bcrypt.compare
@@ -141,7 +141,7 @@ sequenceDiagram
         API-->>Browser: 401
     end
 
-    Note over Browser,API: Subsequent requests auto-attach Cookie;<br/>middleware requireAuth reads req.session.userId
+    Note over Browser,API: Subsequent requests auto-attach Cookie. Middleware requireAuth reads req.session.userId.
 ```
 
 ---
