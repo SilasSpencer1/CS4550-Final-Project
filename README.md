@@ -8,23 +8,24 @@ A social calendar where users share their schedules, connect with friends, and d
 
 ## Team
 
-| Name | Section | Role |
-| --- | --- | --- |
-| Silas Spencer | CS4550 | Solo |
+| Name | Section |
+| --- | --- |
+| Silas Spencer | CS4550 · Web Development, Spring 2026 |
 
 ## Links
 
-- **Live app:** _TBD — deploy to Netlify_
-- **Frontend repository:** _TBD_
-- **Backend repository:** _TBD_
-- **API (backend):** _TBD — deploy to Render_
+- **Live app:** https://roster-spencer.netlify.app
+- **Backend API:** https://roster-backend-cmvp.onrender.com
+- **Repository:** https://github.com/SilasSpencer1/CS4550-Final-Project (monorepo: `frontend/` + `backend/`)
+- **Data models + UML diagrams:** [docs/data-models.md](./docs/data-models.md)
+- **System architecture:** [docs/architecture.md](./docs/architecture.md)
 
 ## Tech stack
 
-- **Frontend:** React + Vite + TypeScript, React Router, Redux Toolkit, React-Bootstrap, `react-big-calendar`
-- **Backend:** Node + Express + TypeScript, Mongoose, express-session
+- **Frontend:** React + Vite + TypeScript, React Router, Redux Toolkit, `react-big-calendar`
+- **Backend:** Node + Express + TypeScript, Mongoose, express-session, bcrypt
 - **Database:** MongoDB Atlas
-- **3rd-party APIs:** Ticketmaster Discovery, Google Calendar (OAuth)
+- **3rd-party APIs:** Ticketmaster Discovery (events), OpenStreetMap Nominatim (geocoding), Google Calendar OAuth (one-way import)
 - **Deploy:** Netlify (frontend) · Render (backend) · Atlas (DB)
 
 ## User types
@@ -34,9 +35,17 @@ A social calendar where users share their schedules, connect with friends, and d
 
 ## Domain models
 
-- `User`, `Event`, `Rsvp`, `Friendship`, `Comment` (5 domain models)
-- One-to-many: `User → Events` (creator)
-- Many-to-many: `Users ↔ Events` via `Rsvp`; `Users ↔ Users` via `Friendship`
+5 domain models backed by MongoDB collections. Full field reference + diagrams: **[docs/data-models.md](./docs/data-models.md)**.
+
+- `User`, `Event`, `Rsvp`, `Friendship`, `Comment`
+- **One-to-many:** `User → Event` (creator), `User → Comment` (author), `Event → Rsvp`
+- **Many-to-many:** `Users ↔ Events` via `Rsvp`, `Users ↔ Users` via `Friendship`
+
+## Testing
+
+- 65 backend integration tests — `cd backend && npm test`
+- 40 frontend unit + component tests — `cd frontend && npm test`
+- 19-step E2E smoke script — `cd backend && npm run smoke`
 
 ## Running locally
 

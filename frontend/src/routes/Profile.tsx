@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getUser, getUserEvents } from "../api/users";
+import { getUser, getUserEvents, getUserFriends } from "../api/users";
 import { sendRequest } from "../api/friends";
 import type { PublicUser, UserEvent } from "../api/types";
 import { useAppSelector } from "../hooks";
@@ -13,6 +13,7 @@ import EventRow from "../ui/EventRow";
 const TABS = [
   { id: "upcoming", label: "upcoming" },
   { id: "hosted", label: "hosted" },
+  { id: "friends", label: "friends" },
   { id: "interests", label: "interests" },
 ] as const;
 type TabId = (typeof TABS)[number]["id"];
@@ -21,6 +22,7 @@ export default function Profile() {
   const { username } = useParams();
   const [user, setUser] = useState<PublicUser | null>(null);
   const [events, setEvents] = useState<UserEvent[]>([]);
+  const [friends, setFriends] = useState<PublicUser[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [tab, setTab] = useState<TabId>("upcoming");
   const [friended, setFriended] = useState(false);
@@ -33,6 +35,9 @@ export default function Profile() {
       .then(setUser)
       .catch(() => setError("we couldn't find that person."));
     getUserEvents(username).then(setEvents);
+    getUserFriends(username)
+      .then(setFriends)
+      .catch(() => setFriends([]));
   }, [username]);
 
   if (error)
@@ -125,6 +130,7 @@ export default function Profile() {
             {t.label}
             {t.id === "upcoming" && ` (${upcoming.length})`}
             {t.id === "hosted" && ` (${hosted.length})`}
+            {t.id === "friends" && ` (${friends.length})`}
           </button>
         ))}
       </div>
@@ -153,6 +159,45 @@ export default function Profile() {
           <div className="stack-sm">
             {hosted.map((e) => (
               <EventRow key={e._id} event={e} />
+            ))}
+          </div>
+        ))}
+
+      {tab === "friends" &&
+        (friends.length === 0 ? (
+          <div className="empty">
+            <span className="editorial">no one on their roster yet.</span>
+          </div>
+        ) : (
+          <div className="grid grid-2">
+            {friends.map((f) => (
+              <Link
+                key={f._id}
+                to={`/profile/${f.username}`}
+                className="card card-tight flex gap-3"
+                style={{
+                  alignItems: "center",
+                  textDecoration: "none",
+                  color: "var(--ink-900)",
+                }}
+              >
+                <Avatar
+                  name={f.displayName || f.username}
+                  avatarUrl={f.avatarUrl}
+                  size={40}
+                />
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontWeight: 600 }}>
+                    {f.displayName || f.username}
+                  </div>
+                  <div className="mono subtle" style={{ fontSize: 12 }}>
+                    @{f.username}
+                  </div>
+                </div>
+                {f.role === "organizer" && (
+                  <Chip kind="organizer">organizer</Chip>
+                )}
+              </Link>
             ))}
           </div>
         ))}

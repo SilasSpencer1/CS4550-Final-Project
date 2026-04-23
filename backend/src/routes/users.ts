@@ -78,6 +78,22 @@ router.get("/:username/events", async (req, res) => {
   res.json(sanitized);
 });
 
+router.get("/:username/friends", async (req, res) => {
+  const user = await User.findOne({ username: req.params.username });
+  if (!user) return res.status(404).json({ error: "Not found" });
+  const friendships = await Friendship.find({
+    status: "accepted",
+    $or: [{ requester: user._id }, { recipient: user._id }],
+  })
+    .populate("requester", "username displayName avatarUrl role")
+    .populate("recipient", "username displayName avatarUrl role");
+
+  const friends = friendships.map((f: any) =>
+    f.requester._id.toString() === user._id.toString() ? f.recipient : f.requester
+  );
+  res.json(friends);
+});
+
 router.get("/", async (req, res) => {
   const q = (req.query.q as string) || "";
   const users = await User.find({

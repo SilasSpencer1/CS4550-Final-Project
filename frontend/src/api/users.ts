@@ -11,6 +11,11 @@ export async function getUserEvents(username: string) {
   return data;
 }
 
+export async function getUserFriends(username: string) {
+  const { data } = await api.get<PublicUser[]>(`/users/${username}/friends`);
+  return data;
+}
+
 export async function updateMe(input: Partial<SessionUser>) {
   const { data } = await api.put<SessionUser>("/users/me", input);
   return data;

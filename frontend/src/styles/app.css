@@ -367,7 +367,7 @@ img { max-width: 100%; display: block; }
 }
 
 .mono { font-family: var(--font-mono); }
-.numeric { font-variant-numeric: tabular-nums; font-family: var(--font-mono); }
+.numeric { font-variant-numeric: tabular-nums; font-family: var(--font-mono); text-align: right; }
 
 .muted { color: var(--fg-muted); }
 .subtle { color: var(--fg-subtle); }

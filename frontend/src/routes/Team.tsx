@@ -40,6 +40,42 @@ export default function Team() {
       </section>
 
       <section className="mb-6">
+        <h2 className="section-title mb-3">docs + diagrams</h2>
+        <div className="stack-sm">
+          <a
+            href={`${FRONTEND_REPO}/blob/main/docs/data-models.md`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="card card-tight flex-between"
+            style={{ textDecoration: "none", color: "var(--ink-900)" }}
+          >
+            <div>
+              <div style={{ fontWeight: 600 }}>data models</div>
+              <div className="mono subtle" style={{ fontSize: 12 }}>
+                uml class diagram · er diagram · field reference · privacy model
+              </div>
+            </div>
+            <Icon name="external" size={18} />
+          </a>
+          <a
+            href={`${FRONTEND_REPO}/blob/main/docs/architecture.md`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="card card-tight flex-between"
+            style={{ textDecoration: "none", color: "var(--ink-900)" }}
+          >
+            <div>
+              <div style={{ fontWeight: 600 }}>system architecture</div>
+              <div className="mono subtle" style={{ fontSize: 12 }}>
+                deployment topology · request flow · auth · privacy enforcement
+              </div>
+            </div>
+            <Icon name="external" size={18} />
+          </a>
+        </div>
+      </section>
+
+      <section className="mb-6">
         <h2 className="section-title mb-3">source code</h2>
         <div className="stack-sm">
           <a

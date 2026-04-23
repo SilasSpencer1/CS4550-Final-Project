@@ -76,6 +76,31 @@ describe("users", () => {
     expect(secret).toBeTruthy();
   });
 
+  it("GET /api/users/:username/friends returns their accepted friends", async () => {
+    const a = agent();
+    const b = agent();
+    const c = agent();
+    const { user: aUser } = await signupAgent(a, {
+      username: "alice-f",
+      email: "alice-f@ex.com",
+    });
+    const { user: bUser } = await signupAgent(b, {
+      username: "bob-f",
+      email: "bob-f@ex.com",
+    });
+    await signupAgent(c, { username: "cara-f", email: "cara-f@ex.com" });
+
+    // alice + bob become friends, cara is a stranger
+    const req1 = await b.post(`/api/friends/request/${aUser.username}`);
+    await a.post(`/api/friends/accept/${req1.body._id}`);
+
+    // public endpoint — anon can read
+    const res = await agent().get(`/api/users/${aUser.username}/friends`);
+    expect(res.status).toBe(200);
+    expect(res.body.length).toBe(1);
+    expect(res.body[0].username).toBe("bob-f");
+  });
+
   it("GET /api/users/:username/events shows full details to the owner", async () => {
     const a = agent();
     const { user } = await signupAgent(a);
